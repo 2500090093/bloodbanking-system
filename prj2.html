@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Banking System</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            background: #b30000;
+            color: white;
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 25px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(rgba(120,0,0,0.75), rgba(120,0,0,0.75)),
+                        url("https://images.unsplash.com/photo-1576091160399-112ba8d25d1d")
+                        center/cover;
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .hero h2 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: white;
+            color: #b30000;
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background: #eee;
+        }
+
+        /* Sections */
+        section {
+            padding: 45px 8%;
+        }
+
+        section h2 {
+            text-align: center;
+            color: #b30000;
+            margin-bottom: 30px;
+        }
+
+        /* Dashboard Cards */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            color: #b30000;
+            margin-bottom: 10px;
+        }
+
+        .card .number {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        /* Form */
+        .form-container {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 5px;
+            background: #b30000;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #800000;
+        }
+
+        /* Blood Inventory */
+        .blood-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .blood-table th,
+        .blood-table td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .blood-table th {
+            background: #b30000;
+            color: white;
+        }
+
+        .available {
+            color: green;
+            font-weight: bold;
+        }
+
+        .low {
+            color: orange;
+            font-weight: bold;
+        }
+
+        /* Features */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .feature {
+            background: white;
+            padding: 25px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .feature h3 {
+            color: #b30000;
+            margin-bottom: 10px;
+        }
+
+        /* Footer */
+        footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        /* Mobile */
+        @media (max-width: 700px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin: 5px;
+            }
+
+            .hero h2 {
+                font-size: 30px;
+            }
+
+            .blood-table {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>🩸 Blood Banking System</h1>
+
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#donor">Donor</a>
+            <a href="#inventory">Inventory</a>
+            <a href="#request">Request Blood</a>
+        </nav>
+    </header>
+
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <h2>Save Lives Through Blood Donation</h2>
+
+        <p>
+            Connecting donors, hospitals and blood banks
+            for quick and efficient blood availability.
+        </p>
+
+        <a href="#donor" class="btn">Become a Donor</a>
+    </section>
+
+
+    <!-- Dashboard -->
+    <section>
+        <h2>Blood Bank Dashboard</h2>
+
+        <div class="dashboard">
+
+            <div class="card">
+                <h3>Registered Donors</h3>
+                <div class="number">1,250</div>
+            </div>
+
+            <div class="card">
+                <h3>Available Blood Units</h3>
+                <div class="number">860</div>
+            </div>
+
+            <div class="card">
+                <h3>Hospitals Connected</h3>
+                <div class="number">45</div>
+            </div>
+
+            <div class="card">
+                <h3>Blood Requests</h3>
+                <div class="number">32</div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- Features -->
+    <section>
+        <h2>System Features</h2>
+
+        <div class="features">
+
+            <div class="feature">
+                <h3>Donor Registration</h3>
+                <p>
+                    Register donors and maintain their basic
+                    blood donation information.
+                </p>
+            </div>
+
+            <div class="feature">
+                <h3>Blood Inventory</h3>
+                <p>
+                    Track available blood units according
+                    to different blood groups.
+                </p>
+            </div>
+
+            <div class="feature">
+                <h3>Hospital Requests</h3>
+                <p>
+                    Hospitals can submit requests for
+                    required blood groups.
+                </p>
+            </div>
+
+            <div class="feature">
+                <h3>Emergency Support</h3>
+                <p>
+                    Help coordinate urgent blood requests
+                    with connected blood banks.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- Donor Registration -->
+    <section id="donor">
+
+        <h2>Donor Registration</h2>
+
+        <div class="form-container">
+
+            <form onsubmit="registerDonor(event)">
+
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="donorName"
+                           placeholder="Enter donor name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Age</label>
+                    <input type="number" id="donorAge"
+                           placeholder="Enter age" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Blood Group</label>
+
+                    <select id="donorBlood" required>
+                        <option value="">Select Blood Group</option>
+                        <option>A+</option>
+                        <option>A-</option>
+                        <option>B+</option>
+                        <option>B-</option>
+                        <option>AB+</option>
+                        <option>AB-</option>
+                        <option>O+</option>
+                        <option>O-</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Phone Number</label>
+
+                    <input type="tel"
+                           placeholder="Enter phone number"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label>Address</label>
+
+                    <textarea rows="3"
+                              placeholder="Enter address"></textarea>
+                </div>
+
+                <button type="submit">
+                    Register Donor
+                </button>
+
+            </form>
+
+        </div>
+    </section>
+
+
+    <!-- Blood Inventory -->
+    <section id="inventory">
+
+        <h2>Blood Inventory</h2>
+
+        <table class="blood-table">
+
+            <tr>
+                <th>Blood Group</th>
+                <th>Available Units</th>
+                <th>Status</th>
+            </tr>
+
+            <tr>
+                <td>A+</td>
+                <td>120</td>
+                <td class="available">Available</td>
+            </tr>
+
+            <tr>
+                <td>A-</td>
+                <td>45</td>
+                <td class="available">Available</td>
+            </tr>
+
+            <tr>
+                <td>B+</td>
+                <td>95</td>
+                <td class="available">Available</td>
+            </tr>
+
+            <tr>
+                <td>B-</td>
+                <td>20</td>
+                <td class="low">Low Stock</td>
+            </tr>
+
+            <tr>
+                <td>AB+</td>
+                <td>60</td>
+                <td class="available">Available</td>
+            </tr>
+
+            <tr>
+                <td>AB-</td>
+                <td>15</td>
+                <td class="low">Low Stock</td>
+            </tr>
+
+            <tr>
+                <td>O+</td>
+                <td>180</td>
+                <td class="available">Available</td>
+            </tr>
+
+            <tr>
+                <td>O-</td>
+                <td>25</td>
+                <td class="low">Low Stock</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <!-- Blood Request -->
+    <section id="request">
+
+        <h2>Request Blood</h2>
+
+        <div class="form-container">
+
+            <form onsubmit="requestBlood(event)">
+
+                <div class="form-group">
+                    <label>Hospital Name</label>
+
+                    <input type="text"
+                           placeholder="Enter hospital name"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label>Blood Group Required</label>
+
+                    <select required>
+                        <option value="">Select Blood Group</option>
+                        <option>A+</option>
+                        <option>A-</option>
+                        <option>B+</option>
+                        <option>B-</option>
+                        <option>AB+</option>
+                        <option>AB-</option>
+                        <option>O+</option>
+                        <option>O-</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Number of Units</label>
+
+                    <input type="number"
+                           min="1"
+                           placeholder="Enter required units"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label>Request Details</label>
+
+                    <textarea rows="4"
+                              placeholder="Enter additional details"></textarea>
+                </div>
+
+                <button type="submit">
+                    Submit Blood Request
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+        <p>
+            © 2026 Blood Banking System | Connecting Donors & Hospitals
+        </p>
+    </footer>
+
+
+    <!-- JavaScript -->
+    <script>
+
+        function registerDonor(event) {
+
+            event.preventDefault();
+
+            let name = document.getElementById("donorName").value;
+            let blood = document.getElementById("donorBlood").value;
+
+            alert(
+                "Donor Registered Successfully!\n\n" +
+                "Name: " + name +
+                "\nBlood Group: " + blood
+            );
+
+            event.target.reset();
+        }
+
+
+        function requestBlood(event) {
+
+            event.preventDefault();
+
+            alert(
+                "Blood request submitted successfully!\n\n" +
+                "The blood bank will process your request."
+            );
+
+            event.target.reset();
+        }
+
+    </script>
+
+</body>
+</html>
